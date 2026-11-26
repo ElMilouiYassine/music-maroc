@@ -1,0 +1,702 @@
+/* ============================================================
+   ENCYCLOPÉDIE MUSICALE DU MAROC — feuille de style
+   Version 2.1 — palette chaleureuse, hiérarchie renforcée
+   (mode sombre retiré)
+   ============================================================ */
+
+/* ---------- VARIABLES ---------- */
+:root {
+    /* Neutres */
+    --noir: #0d0d0d;
+    --noir-doux: #1c1917;
+    --gris-fonce: #44403c;
+    --gris: #78716c;
+    --gris-clair: #a8a29e;
+    --bordure: #e7e5e4;
+    --bordure-forte: #d6d3d1;
+    --fond: #fefdfb;
+    --fond-alt: #f8f5f0;
+    --fond-carte: #ffffff;
+
+    /* Accents chauds (inspirés du Maroc : terre, safran, cuivre) */
+    --accent: #b45309;
+    --accent-clair: #ea580c;
+    --accent-fonce: #7c2d12;
+    --accent-bg: #fef3e7;
+    --or: #a16207;
+    --sable: #f5ede1;
+
+    /* Sémantique */
+    --info: #1e6fa8;
+    --info-bg: #eff6fb;
+    --warning: #b45309;
+    --warning-bg: #fef6ec;
+
+    /* Ombres */
+    --ombre-sm: 0 1px 2px rgba(28, 25, 23, 0.04);
+    --ombre-md: 0 4px 12px rgba(28, 25, 23, 0.06);
+    --ombre-lg: 0 8px 24px rgba(28, 25, 23, 0.08);
+
+    /* Rayons */
+    --rayon: 4px;
+    --rayon-lg: 8px;
+
+    /* Transitions */
+    --transition: 0.2s ease;
+}
+
+/* ---------- BASE ---------- */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+}
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Georgia', 'Iowan Old Style', 'Times New Roman', serif;
+    line-height: 1.75;
+    color: var(--noir-doux);
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+    background: var(--fond);
+    font-size: 1.05rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ---------- TYPOGRAPHIE ---------- */
+h1, h2, h3, h4, h5 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                 'Helvetica Neue', Arial, sans-serif;
+    color: var(--noir);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    line-height: 1.1;
+    font-weight: 800;
+    margin: 0 0 1rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 2px solid var(--noir);
+    position: relative;
+}
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 80px;
+    height: 2px;
+    background: var(--accent);
+}
+
+h2 {
+    font-size: clamp(1.4rem, 3.5vw, 1.85rem);
+    font-weight: 700;
+    margin: 4rem 0 1.4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--bordure);
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    scroll-margin-top: 1.5rem;
+    text-wrap: balance;
+}
+h2::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 1.5rem;
+    background: var(--accent);
+    flex-shrink: 0;
+    border-radius: 2px;
+}
+
+h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 2.6rem 0 1rem;
+    scroll-margin-top: 1.5rem;
+    color: var(--noir);
+}
+
+h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-fonce);
+    margin: 2rem 0 0.7rem;
+    scroll-margin-top: 1rem;
+}
+
+p { margin: 0 0 1.15rem; }
+
+strong {
+    color: var(--noir);
+    font-weight: 700;
+}
+em { color: var(--gris-fonce); font-style: italic; }
+
+/* Liens dans le texte */
+a {
+    color: var(--accent-fonce);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(180, 83, 9, 0.35);
+    transition: color var(--transition), border-color var(--transition);
+}
+a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+/* ---------- NAVIGATION SITE (sticky) ---------- */
+#site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.2rem;
+    padding: 0.85rem 1.2rem;
+    margin: 0 -0.5rem 2.5rem;
+    background: rgba(254, 253, 251, 0.92);
+    backdrop-filter: saturate(180%) blur(8px);
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--bordure);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.78rem;
+}
+#site-nav a {
+    border-bottom: 2px solid transparent;
+    color: var(--gris-fonce);
+    padding: 0.3rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: color var(--transition), border-color var(--transition);
+}
+#site-nav a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+#site-nav a.active {
+    color: var(--noir);
+    font-weight: 700;
+    border-bottom-color: var(--accent);
+}
+#site-nav .nav-soon {
+    color: var(--gris-clair);
+    cursor: not-allowed;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0;
+}
+#site-nav .badge-soon,
+.badge-soon {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.58rem;
+    padding: 0.12rem 0.4rem;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: none;
+    vertical-align: middle;
+    font-family: -apple-system, sans-serif;
+    box-shadow: 0 1px 2px rgba(180, 83, 9, 0.3);
+}
+
+/* ---------- ACCESSIBILITÉ ---------- */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--rayon);
+}
+.skip-link {
+    position: absolute;
+    top: -50px;
+    left: 1rem;
+    background: var(--noir);
+    color: #fff;
+    padding: 0.7rem 1.1rem;
+    text-decoration: none;
+    border-bottom: none;
+    border-radius: 0 0 var(--rayon) var(--rayon);
+    z-index: 100;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.85rem;
+    transition: top 0.2s ease;
+    box-shadow: var(--ombre-md);
+}
+.skip-link:focus {
+    top: 0;
+    color: #fff;
+}
+
+/* ---------- BARRE DE PROGRESSION ---------- */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-fonce), var(--accent), var(--accent-clair));
+    z-index: 999;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 6px rgba(180, 83, 9, 0.4);
+}
+
+/* ---------- SOMMAIRE ---------- */
+.sommaire {
+    background: var(--sable);
+    border: 1px solid var(--bordure);
+    border-left: 3px solid var(--accent);
+    padding: 1.8rem 2rem 1.5rem;
+    margin: 2.5rem 0;
+    border-radius: 0 var(--rayon-lg) var(--rayon-lg) 0;
+}
+.sommaire h2 {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-fonce);
+}
+.sommaire h2::before { display: none; }
+.sommaire ol {
+    margin: 0.6rem 0 0;
+    padding-left: 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.92rem;
+}
+.sommaire li { margin-bottom: 0.5rem; }
+.sommaire ol ol { margin-top: 0.4rem; padding-left: 1.3rem; }
+.sommaire a {
+    border-bottom: none;
+    color: var(--noir-doux);
+    transition: color var(--transition), padding var(--transition);
+}
+.sommaire a:hover {
+    color: var(--accent);
+    padding-left: 4px;
+}
+
+/* ---------- CARTES INSTRUMENTS ---------- */
+.instrument-card,
+.chapter-card,
+.genre-card {
+    background: var(--fond-carte);
+    border: 1px solid var(--bordure);
+    border-left: 4px solid var(--noir);
+    padding: 1.8rem 2rem;
+    margin: 1.8rem 0;
+    border-radius: 0 var(--rayon-lg) var(--rayon-lg) 0;
+    box-shadow: var(--ombre-sm);
+    transition: border-left-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.instrument-card:hover,
+.chapter-card:hover,
+.genre-card:hover {
+    border-left-color: var(--accent);
+    box-shadow: var(--ombre-md);
+    transform: translateX(2px);
+}
+
+.instrument-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 0.8rem;
+    border: 1px solid var(--bordure);
+    border-radius: var(--rayon);
+    filter: saturate(0.95);
+    transition: filter var(--transition);
+}
+.instrument-card:hover img {
+    filter: saturate(1.05);
+}
+
+.credit {
+    font-size: 0.7rem;
+    color: var(--gris);
+    font-style: italic;
+    margin: 0 0 1.2rem;
+    font-family: -apple-system, sans-serif;
+}
+
+.instrument-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--noir);
+    margin: 0 0 1rem;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+.instrument-name .arabic {
+    font-size: 1.4rem;
+    color: var(--accent);
+    font-weight: 400;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    letter-spacing: 0;
+}
+
+.badge-famille {
+    display: inline-block;
+    background: var(--noir);
+    color: #fff;
+    font-size: 0.6rem;
+    padding: 0.28rem 0.65rem;
+    margin-left: 0.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: -apple-system, sans-serif;
+    vertical-align: middle;
+    border-radius: 999px;
+}
+
+/* ---------- FICHE TECHNIQUE ---------- */
+.fiche-technique {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: 1rem;
+    background: var(--bordure);
+    border: 1px solid var(--bordure);
+    border-radius: var(--rayon);
+    overflow: hidden;
+    font-size: 0.9rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.fiche-technique .critere {
+    background: var(--fond-carte);
+    padding: 1rem 1.15rem;
+    line-height: 1.65;
+    transition: background var(--transition);
+}
+.fiche-technique .critere:hover {
+    background: var(--accent-bg);
+}
+.fiche-technique .critere strong {
+    display: block;
+    color: var(--accent);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+}
+@media (max-width: 700px) {
+    .fiche-technique { grid-template-columns: 1fr; }
+}
+
+/* ---------- CONTEXTE ---------- */
+.context {
+    background: var(--fond-alt);
+    padding: 1.4rem 1.6rem;
+    margin: 1.3rem 0;
+    border-left: 3px solid var(--gris-fonce);
+    border-radius: 0 var(--rayon) var(--rayon) 0;
+}
+.context p:last-child { margin-bottom: 0; }
+
+/* ---------- NOTES & WARNINGS ---------- */
+.note, .warning {
+    padding: 1rem 1.3rem;
+    margin: 1.4rem 0;
+    font-size: 0.9rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.65;
+    border-radius: 0 var(--rayon) var(--rayon) 0;
+}
+.note {
+    background: var(--info-bg);
+    border-left: 3px solid var(--info);
+}
+.warning {
+    background: var(--warning-bg);
+    border-left: 3px solid var(--warning);
+}
+
+/* ---------- TABLEAUX (responsives) ---------- */
+.table-wrapper {
+    overflow-x: auto;
+    margin: 1.6rem 0;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--bordure);
+    border-radius: var(--rayon);
+    box-shadow: var(--ombre-sm);
+}
+.summary-table,
+.lexique-table,
+.correspondance-table,
+.ressources-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.87rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-width: 600px;
+}
+.summary-table th, .summary-table td,
+.lexique-table th, .lexique-table td,
+.correspondance-table th, .correspondance-table td,
+.ressources-table th, .ressources-table td {
+    border-bottom: 1px solid var(--bordure);
+    padding: 0.85rem 1rem;
+    text-align: left;
+    vertical-align: top;
+}
+.summary-table th, .lexique-table th,
+.correspondance-table th, .ressources-table th {
+    background: var(--noir);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: sticky;
+    top: 0;
+}
+.summary-table tr:nth-child(even),
+.lexique-table tr:nth-child(even),
+.correspondance-table tr:nth-child(even),
+.ressources-table tr:nth-child(even) {
+    background: var(--fond-alt);
+}
+.summary-table tbody tr:hover,
+.lexique-table tbody tr:hover,
+.correspondance-table tbody tr:hover,
+.ressources-table tbody tr:hover {
+    background: var(--accent-bg);
+}
+.ressources-table td:first-child {
+    font-weight: 600;
+    color: var(--noir);
+}
+
+/* ---------- TIMELINE ---------- */
+.timeline {
+    position: relative;
+    border-left: 2px solid var(--bordure-forte);
+    padding-left: 1.8rem;
+    margin: 2rem 0;
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.6rem;
+    font-size: 0.95rem;
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.2rem;
+    top: 0.55rem;
+    width: 11px;
+    height: 11px;
+    background: var(--accent);
+    border: 2px solid var(--fond);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--accent);
+}
+.timeline-item strong {
+    color: var(--noir);
+    display: block;
+    margin-bottom: 0.15rem;
+}
+
+/* ---------- ENCADRÉ ÉCOUTE ---------- */
+.encadre-ecoute {
+    background: linear-gradient(135deg, var(--accent-bg), var(--sable));
+    border: 1px solid var(--bordure);
+    border-left: 3px solid var(--accent);
+    padding: 1.1rem 1.3rem;
+    margin: 1.4rem 0;
+    font-size: 0.9rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    border-radius: 0 var(--rayon) var(--rayon) 0;
+}
+.encadre-ecoute::before {
+    content: '🎧';
+    margin-right: 0.5rem;
+}
+
+/* ---------- CARTE MUSICALE ---------- */
+.carte-musicale {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+.zone-carte {
+    background: var(--fond-carte);
+    border: 1px solid var(--bordure);
+    border-top: 3px solid var(--noir);
+    padding: 1.3rem 1.4rem;
+    border-radius: 0 0 var(--rayon) var(--rayon);
+    box-shadow: var(--ombre-sm);
+    transition: border-top-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.zone-carte:hover {
+    border-top-color: var(--accent);
+    box-shadow: var(--ombre-md);
+    transform: translateY(-2px);
+}
+.zone-carte h5 {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--accent-fonce);
+    margin: 0 0 0.8rem;
+    font-family: -apple-system, sans-serif;
+}
+.zone-carte ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    font-family: -apple-system, sans-serif;
+}
+.zone-carte li { margin-bottom: 0.4rem; }
+
+/* ---------- VIDÉO RESPONSIVE ---------- */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    padding-bottom: 56.25%;
+    margin: 1.6rem 0;
+    background: #000;
+    border: 1px solid var(--bordure);
+    border-radius: var(--rayon-lg);
+    overflow: hidden;
+    box-shadow: var(--ombre-md);
+}
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* ---------- BOUTON RETOUR EN HAUT ---------- */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    background: var(--noir);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    border-bottom: none;
+    font-size: 1.25rem;
+    z-index: 100;
+    box-shadow: var(--ombre-lg);
+    transition: background var(--transition), transform var(--transition), opacity var(--transition);
+    opacity: 0;
+    pointer-events: none;
+}
+.back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+.back-to-top:hover {
+    background: var(--accent);
+    color: #fff;
+    border-bottom-color: transparent;
+    transform: translateY(-4px) scale(1.05);
+}
+
+/* ---------- PAGE "À VENIR" ---------- */
+.soon-page {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+.soon-page h2 {
+    justify-content: center;
+    border-top: none;
+    padding-top: 0;
+}
+.soon-page h2::before { display: none; }
+.soon-lead {
+    font-size: 1.05rem;
+    color: var(--gris-fonce);
+    max-width: 32rem;
+    margin: 0 auto 2rem;
+}
+.soon-btn {
+    display: inline-block;
+    margin: 0.3rem;
+    padding: 0.75rem 1.3rem;
+    background: var(--noir);
+    color: #fff;
+    border: none;
+    border-radius: var(--rayon);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: background var(--transition), transform var(--transition);
+    box-shadow: var(--ombre-sm);
+}
+.soon-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-bottom: none;
+    transform: translateY(-1px);
+    box-shadow: var(--ombre-md);
+}
+
+/* ---------- PIED DE PAGE ---------- */
+.page-footer {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--bordure);
+    font-size: 0.72rem;
+    color: var(--gris);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-family: -apple-system, sans-serif;
+}
+.page-footer p { margin: 0; }
+
+/* ---------- SÉLECTION ---------- */
+::selection {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ---------- IMPRESSION ---------- */
+@media print {
+    .progress-bar, .back-to-top, .skip-link, .video-wrapper, #site-nav { display: none !important; }
+    body { max-width: 100%; padding: 0; font-size: 11pt; background: #fff; color: #000; }
+    a { color: #000; border-bottom: none; }
+    h2 { page-break-after: avoid; }
+    .instrument-card, .context, .zone-carte { page-break-inside: avoid; }
+    .instrument-card { box-shadow: none; border-left-color: #000; }
+}
