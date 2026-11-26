@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="description" content="Encyclopédie des instruments et traditions musicales du Maroc : histoire, géographie, facture, jeu et transmission.">
     <title>Encyclopédie des instruments et traditions musicales du Maroc — Ressources enrichies</title>
     <style>
         /* ---------- VARIABLES ---------- */
@@ -16,7 +18,7 @@
             --bordure-forte: #d4d4d4;
             --fond: #ffffff;
             --fond-alt: #fafafa;
-            --accent: #b45309; /* terracotta discret */
+            --accent: #b45309;
         }
 
         html { scroll-behavior: smooth; }
@@ -61,6 +63,7 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            scroll-margin-top: 1.5rem;
         }
         h2::before {
             content: '';
@@ -75,6 +78,7 @@
             font-size: 1.3rem;
             font-weight: 700;
             margin: 2.4rem 0 0.8rem;
+            scroll-margin-top: 1.5rem;
         }
 
         h4 {
@@ -84,6 +88,7 @@
             letter-spacing: 0.1em;
             color: var(--gris-fonce);
             margin: 1.8rem 0 0.6rem;
+            scroll-margin-top: 1rem;
         }
 
         p { margin: 0 0 1.1rem; }
@@ -99,6 +104,41 @@
         a:hover {
             color: var(--accent);
             border-bottom-color: var(--accent);
+        }
+
+        /* ---------- ACCESSIBILITÉ ---------- */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--noir);
+            color: #fff;
+            padding: 0.6rem 1rem;
+            text-decoration: none;
+            border-bottom: none;
+            z-index: 100;
+            font-family: -apple-system, sans-serif;
+            font-size: 0.85rem;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; color: #fff; }
+
+        /* ---------- BARRE DE PROGRESSION ---------- */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--accent);
+            z-index: 999;
+            transition: width 0.1s linear;
         }
 
         /* ---------- SOMMAIRE ---------- */
@@ -138,9 +178,12 @@
             border-left: 3px solid var(--noir);
             padding: 1.8rem 2rem;
             margin: 1.8rem 0;
-            transition: border-left-color 0.2s;
+            transition: border-left-color 0.2s, box-shadow 0.2s;
         }
-        .instrument-card:hover { border-left-color: var(--accent); }
+        .instrument-card:hover {
+            border-left-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
 
         .instrument-card img {
             max-width: 100%;
@@ -248,16 +291,22 @@
             border-left: 3px solid var(--accent);
         }
 
-        /* ---------- TABLEAUX ---------- */
+        /* ---------- TABLEAUX (responsives) ---------- */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            -webkit-overflow-scrolling: touch;
+        }
         .summary-table,
         .lexique-table,
         .correspondance-table,
         .ressources-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1.5rem 0;
+            margin: 0;
             font-size: 0.87rem;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-width: 600px;
         }
         .summary-table th, .summary-table td,
         .lexique-table th, .lexique-table td,
@@ -338,9 +387,12 @@
             border: 1px solid var(--bordure);
             border-top: 2px solid var(--noir);
             padding: 1.3rem 1.4rem;
-            transition: border-top-color 0.2s;
+            transition: border-top-color 0.2s, box-shadow 0.2s;
         }
-        .zone-carte:hover { border-top-color: var(--accent); }
+        .zone-carte:hover {
+            border-top-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
         .zone-carte h5 {
             font-size: 0.78rem;
             text-transform: uppercase;
@@ -357,6 +409,53 @@
             font-family: -apple-system, sans-serif;
         }
         .zone-carte li { margin-bottom: 0.4rem; }
+
+        /* ---------- VIDÉO RESPONSIVE ---------- */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            padding-bottom: 56.25%;
+            margin: 1.5rem 0;
+            background: #000;
+            border: 1px solid var(--bordure);
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ---------- BOUTON RETOUR EN HAUT ---------- */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            background: var(--noir);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+            border-bottom: none;
+            font-size: 1.2rem;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .back-to-top:hover {
+            background: var(--accent);
+            color: #fff;
+            border-bottom-color: transparent;
+            transform: translateY(-3px);
+        }
 
         /* ---------- PIED DE PAGE ---------- */
         .page-footer {
@@ -377,28 +476,21 @@
             background: var(--noir);
             color: #fff;
         }
-        /* ---------- VIDÉO RESPONSIVE ---------- */
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 100%;
-            padding-bottom: 56.25%; /* ratio 16:9 */
-            margin: 1.5rem 0;
-            background: #000;
-            border: 1px solid var(--bordure);
-            overflow: hidden;
-        }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+
+        /* ---------- IMPRESSION ---------- */
+        @media print {
+            .progress-bar, .back-to-top, .skip-link, .video-wrapper { display: none !important; }
+            body { max-width: 100%; padding: 0; font-size: 11pt; }
+            a { color: #000; border-bottom: none; }
+            h2 { page-break-after: avoid; }
+            .instrument-card, .context, .zone-carte { page-break-inside: avoid; }
         }
     </style>
 </head>
 <body>
+
+<a class="skip-link" href="#intro">Aller au contenu</a>
+<div class="progress-bar" id="progressBar"></div>
 
 <h1>Encyclopédie des instruments et traditions musicales du Maroc</h1>
 <p><strong>Un patrimoine pluriel : histoire, géographie, facture, jeu et transmission</strong></p>
@@ -456,6 +548,7 @@
 
 <p>La classification de Hornbostel et Sachs (1914) répartit les instruments par mode de production du son. Au Maroc, les quatre grandes familles sont représentées, avec une richesse particulière dans les percussions. Les catalogues de la BnF et de la Bpi recensent des instruments parfois oubliés : <em>aguâl</em>, <em>lîra</em>, <em>rhaïta nfîr</em>, <em>ta’nja</em>, <em>tbîlat</em>, <em>zamr</em>.</p>
 
+<div class="table-wrapper">
 <table class="summary-table">
     <thead>
         <tr><th>Famille</th><th>Principe</th><th>Instruments représentatifs</th></tr>
@@ -467,6 +560,7 @@
         <tr><td><strong>Idiophones</strong></td><td>Le son est produit par la vibration du corps même de l’instrument.</td><td>Qraqeb, naqqous, sinja, ciseaux (mqass), sonnailles, crotales, tismamain (cymbales digitales)</td></tr>
     </tbody>
 </table>
+</div>
 
 <!-- ============================================================ -->
 <h2 id="catalogue">3. Catalogue détaillé des instruments</h2>
@@ -492,7 +586,6 @@
 <div class="instrument-card">
     <h4 class="instrument-name">Le lotar (loutar) <span class="arabic">الوطار / اللوطار</span><span class="badge-famille">Cordophone</span></h4>
     <img src="src/lotar.jpg" alt="Lotar, luth amazigh">
-   
     <div class="fiche-technique">
         <div class="critere"><strong>Origine et histoire</strong>Luth de la tradition amazighe du Souss et du Moyen Atlas, associé aux Rwaïss et aux groupes amazighs.</div>
         <div class="critere"><strong>Fabrication</strong>Caisse piriforme recouverte de peau ; manche ; trois ou quatre cordes selon les variantes (cordes en nylon).</div>
@@ -713,7 +806,6 @@
 <div class="instrument-card">
     <h4 class="instrument-name">La darbouka (derbouka) <span class="arabic">الدربوكة</span><span class="badge-famille">Membranophone</span></h4>
     <img src="src/darbouka.jpg" alt="Darbouka, tambour en forme de calice">
-    
     <div class="fiche-technique">
         <div class="critere"><strong>Origine et histoire</strong>Tambour en forme de calice, largement diffusé dans le monde arabe et au Maroc.</div>
         <div class="critere"><strong>Fabrication</strong>Corps en métal ou en céramique, peau tendue.</div>
@@ -778,7 +870,7 @@
 <!-- TAR / DAFF / RIQ -->
 <div class="instrument-card">
     <h4 class="instrument-name">Le tar, le daff et le riq <span class="arabic">الطار / الدف / الرق</span><span class="badge-famille">Membranophones</span></h4>
-    <img src="src/daff.jpg" alt="Sinja, plateau métallique utilisé comme instrument dans l'Aïta">
+    <img src="src/daff.jpg" alt="Tar, daff et riq, tambours sur cadre">
     <div class="fiche-technique">
         <div class="critere"><strong>Tar</strong>Tambourin sur cadre, utilisé dans l’andaloussi et les musiques savantes ; certaines variantes ont des cymbalettes.</div>
         <div class="critere"><strong>Daff</strong>Tambour sur cadre, parfois avec anneaux ou cymbalettes ; employé dans les chants spirituels et populaires. Les enregistrements de 1966 mentionnent un <em>djouf</em> (grand tambour sur cadre) dans les contextes rituels.</div>
@@ -858,7 +950,7 @@
     <h4 class="instrument-name">Le zamar (azamar) <span class="arabic">الزمّار</span><span class="badge-famille">Aérophone</span></h4>
     <img src="src/Zammar.jpg" alt="Zamar, clarinette double du Rif oriental">
     <div class="fiche-technique">
-        <div class="critere"><strong>Origine et histoire</strong>Clarinette double berbère du Rif oriental (Nador, Berkane, Driouch), jouée dans la Reggada et les fêtes. Ahmed Aydoun le cite parmi les instruments populaires, aux côtés du <em>zamar</em> (flûte double), de la <em>gayta</em> et de l’<em>adjun</em> (tambourin sur cadre).</div>
+        <div class="critere"><strong>Origine et histoire</strong>Clarinette double berbère du Rif oriental (Nador, Berkane, Driouch), jouée dans la Reggada et les fêtes. Ahmed Aydoun le cite parmi les instruments populaires, aux côtés de la <em>gayta</em> et de l’<em>adjun</em> (tambourin sur cadre).</div>
         <div class="critere"><strong>Fabrication</strong>Deux tuyaux de bambou (environ 42 cm) terminés par des cornes de vache ; anches simples liées à la cire d’abeille.</div>
         <div class="critere"><strong>Technique de jeu</strong>Se joue face à face, en gonflant les joues ; son grave et bourdonnant.</div>
         <div class="critere"><strong>Rôle musical</strong>Mélodie principale dans la Reggada.</div>
@@ -869,7 +961,7 @@
 <!-- NAY / GASBA -->
 <div class="instrument-card">
     <h4 class="instrument-name">Le nay, la gasba et l’awad <span class="arabic">الناي / القصبة / العواد</span><span class="badge-famille">Aérophone</span></h4>
-            <img src="src/Gasba.jpg" alt="Gasba, flûte en roseau marocaine">
+    <img src="src/Gasba.jpg" alt="Gasba, flûte en roseau marocaine">
     <div class="fiche-technique">
         <div class="critere"><strong>Nay</strong>Flûte en roseau des traditions savantes et soufies, ouverte aux deux extrémités.</div>
         <div class="critere"><strong>Gasba</strong>Flûte en roseau utilisée dans la Reggada, les Jilala et les traditions populaires. La BnF mentionne la <em>gasba</em> dans les instruments reproduits par Chottin.</div>
@@ -921,13 +1013,15 @@
     <p><strong>Rythmes et chants.</strong> Cycles répétitifs, chants en tachelhit (poétiques, satiriques ou rituels). Les phrases musicales alternent souvent entre un chœur et un soliste, dans un jeu de question-réponse qui peut durer plusieurs heures.</p>
     <p><strong>Transmission.</strong> Longtemps transmis oralement au sein des villages et des familles, l'ahwach est aujourd'hui porté par des associations, des troupes de festivals et des conservatoires, tout en restant une pratique vivante des communautés rurales.</p>
     <div class="video-wrapper">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/88ZygWPtfbA?si=ziEg6Fjy8JOd9UAo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-        encrypted-media; 
-        gyroscope; 
-        picture-in-picture; 
-        web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/88ZygWPtfbA"
+                title="Ahwach — danse et chant collectifs du Souss (Maroc)"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                loading="lazy"></iframe>
     </div>
-    
+    <p class="credit">Vidéo : extrait documentaire sur l'ahwach. Si la vidéo ne s'affiche pas, <a href="https://www.youtube.com/watch?v=88ZygWPtfbA" target="_blank" rel="noopener">la consulter directement sur YouTube</a>.</p>
+</div>
 
 <h3 id="ahidous">4.2 Ahidous (أحيدوس)</h3>
 <div class="context">
@@ -961,28 +1055,31 @@
     <p class="credit">Vidéo : extrait documentaire sur les rwaïss. Si la vidéo ne s'affiche pas, <a href="https://www.youtube.com/watch?v=jUIUlm5bDMI" target="_blank" rel="noopener">la consulter directement sur YouTube</a>.</p>
 </div>
 
-<h3>4.4 Musique amazighe du Moyen Atlas et du Rif</h3>
+<h3 id="amazighe-atlas-rif">4.4 Musique amazighe du Moyen Atlas et du Rif</h3>
 <div class="context">
-<p>Le Moyen Atlas pratique l’ahidous avec lotar et bendir. Le Rif oriental est le domaine de la <strong>Reggada</strong> et du <strong>zamar</strong> (voir section 5). Ahmed Aydoun a consacré plusieurs ouvrages à ces répertoires, notamment à la musique amazighe et hassanie.</p>
+    <p><strong>Moyen Atlas.</strong> L'<em>ahidous</em> y est pratiqué avec le lotar et le bendir, en cercle ou en ligne. Les chants en tamazight alternent entre soliste et chœur, sur des cycles rythmiques répétitifs.</p>
+    <p><strong>Rif oriental.</strong> Le Rif est le domaine de la <strong>Reggada</strong> et du <strong>zamar</strong> (voir section 5). La Reggada, danse de guerre à l'origine, est aujourd'hui une pratique festive et scénique, jouée au zamar, au bendir (adjoun) et à la gasba (tamja).</p>
+    <p><strong>Recherches.</strong> Ahmed Aydoun a consacré plusieurs ouvrages à ces répertoires, notamment à la musique amazighe et hassanie, documentant les instruments, les modes et les contextes rituels.</p>
 </div>
 
 <!-- ============================================================ -->
 <h2 id="populaires">5. Les musiques populaires marocaines</h2>
 
-<h3>5.1 Aïta (العيطة) et ses variantes régionales</h3>
+<h3 id="aita">5.1 Aïta (العيطة) et ses variantes régionales</h3>
 <div class="context">
-<p><strong>Origine et région.</strong> Plaines atlantiques. Genre rural et semi-urbain de chant et de poésie performative, associé aux <strong>cheikhat</strong>. Le terme signifie « cri » et renvoie à une expression à la fois amoureuse, religieuse et protestataire.</p>
-<p><strong>Sept grandes appellations régionales :</strong></p>
-<ul>
-    <li><strong></strong> (Safi, Essaouira) : <strong>megroune</strong>, <strong>sinja</strong>, bendir, taarija, loutar.</li>
-    <li><strong>Aïta Merssaouia</strong> (Casablanca, Chaouia) : bendir, taarija, kamanja.</li>
-    <li><strong>Aïta Hasbaouia</strong> (Abda, Safi) : instruments similaires.</li>
-    <li><strong>Aïta Zaëria</strong> (région des Zaër) : percussions et cordes.</li>
-    <li><strong>Aïta Filalia</strong> (Tafilalet) : influences sahariennes.</li>
-    <li><strong>Aïta Jeblia</strong> (Nord, montagnes) : proche de la Taqtoqa Jabalia.</li>
-    <li><strong>Aïta Haouzia</strong> (Marrakech) : bendir, taarija, loutar.</li>
-</ul>
-<p><strong>Instruments communs.</strong> Bendir, taarija, kamanja, loutar, oud, darbouka ; le <strong>megroune</strong> et la <strong>sinja</strong> sont spécifiques à la Chaïdmiya. L’anthologie <em>Chikhates et Chioukhs de l’Aïta</em> (2018) documente ces variantes sur trois années d’enregistrement.</p>
+    <p><strong>Origine et région.</strong> Plaines atlantiques. Genre rural et semi-urbain de chant et de poésie performative, associé aux <strong>cheikhat</strong> (chanteuses) et aux <strong>chioukhs</strong> (chanteurs). Le terme signifie « cri » et renvoie à une expression à la fois amoureuse, religieuse et protestataire, où la voix occupe une place centrale.</p>
+    <p><strong>Sept grandes appellations régionales :</strong></p>
+    <ul>
+        <li><strong>Aïta Chaïdmiya</strong> (Safi, Essaouira) : <strong>megroune</strong>, <strong>sinja</strong>, bendir, taarija, loutar.</li>
+        <li><strong>Aïta Merssaouia</strong> (Casablanca, Chaouia) : bendir, taarija, kamanja.</li>
+        <li><strong>Aïta Hasbaouia</strong> (Abda, Safi) : instruments similaires.</li>
+        <li><strong>Aïta Zaëria</strong> (région des Zaër) : percussions et cordes.</li>
+        <li><strong>Aïta Filalia</strong> (Tafilalet) : influences sahariennes.</li>
+        <li><strong>Aïta Jeblia</strong> (Nord, montagnes) : proche de la Taqtoqa Jabalia.</li>
+        <li><strong>Aïta Haouzia</strong> (Marrakech) : bendir, taarija, loutar.</li>
+    </ul>
+    <p><strong>Instruments communs.</strong> Bendir, taarija, kamanja, loutar, oud, darbouka ; le <strong>megroune</strong> et la <strong>sinja</strong> sont spécifiques à la Chaïdmiya. L’anthologie <em>Chikhates et Chioukhs de l’Aïta</em> (2018) documente ces variantes sur trois années d’enregistrement.</p>
+    <p><strong>Transmission et évolution.</strong> Longtemps transmise oralement lors des fêtes et des moussems, l'aïta est aujourd'hui portée par des festivals (comme le Festival de l'Aïta à Safi) et des artistes qui la réinterprètent. Des figures comme Zohra El Fassia (1905–1994) ou Abida Sarma ont contribué à sa diffusion au-delà des cercles régionaux.</p>
 </div>
 
 <h3 id="chaabi">5.2 Chaâbi (الشعبي)</h3>
@@ -991,11 +1088,11 @@
     <p><strong>Instruments.</strong> Lotar, swisdi, bendir, taarija, darbouka, ghaita, kamanja, banjo, mandole. Les formations modernes y ajoutent souvent clavier, guitare électrique et batterie.</p>
     <p><strong>Évolution.</strong> Renouvelé dans les années 1970 par Nass El Ghiwane, Jil Jilala et Lemchaheb. L’encyclopédie SAGE souligne l’influence du <em>halqa</em> (théâtre de rue) et des enregistrements 45 tours sur la structuration du genre. Aujourd'hui, le chaâbi reste une musique de fête et de scène, jouée dans les mariages, les cafés et les festivals.</p>
     <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/6EGYgRUe2wg" 
-                title="Chaâbi — musique urbaine des plaines atlantiques (Maroc)" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin" 
-                allowfullscreen 
+        <iframe src="https://www.youtube.com/embed/6EGYgRUe2wg"
+                title="Chaâbi — musique urbaine des plaines atlantiques (Maroc)"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
                 loading="lazy"></iframe>
     </div>
     <p class="credit">Vidéo : extrait de chaâbi marocain. Si la vidéo ne s'affiche pas, <a href="https://www.youtube.com/watch?v=6EGYgRUe2wg" target="_blank" rel="noopener">la consulter directement sur YouTube</a>.</p>
@@ -1033,7 +1130,6 @@
     <p class="credit">Vidéo : extrait de hayti (région de Tissa et Taounate). Si la vidéo ne s'affiche pas, <a href="https://www.youtube.com/watch?v=7lQSAKoxMKc" target="_blank" rel="noopener">la consulter directement sur YouTube</a>.</p>
 </div>
 
-
 <h3 id="reggada">5.5 Reggada (الركادة)</h3>
 <div class="context">
     <p><strong>Origine et région.</strong> Rif oriental (Nador, Berkane, Driouch, Al Hoceima). Danse de guerre à l’origine, la reggada était pratiquée par les tribus rifaines avant les combats ou lors des célébrations de victoire. Elle est aujourd'hui devenue une danse festive et scénique, exécutée en ligne ou en cercle, avec des mouvements d'épaules et de fusils symboliques.</p>
@@ -1053,7 +1149,7 @@
 <h3 id="aarfa">5.6 Aarfa (العرفة) et Arfa</h3>
 <div class="context">
     <p><strong>Origine et région.</strong> Oriental (Oujda, Berkane, Ouled Aoujdalia). Tradition festive bédouine, l'<em>aarfa</em> (ou <em>arfa</em>) est pratiquée lors des mariages, des fêtes de circoncision et des rassemblements tribaux. Elle mêle chant, danse et poésie, avec une forte dimension collective.</p>
-    <p><strong>Instruments.</strong> Bendir, <strong>zamer</strong> (flûte à deux cornes), percussions. Le zamer, instrument à anche double terminé par des cornes de vache, donne à l'aarfa sa couleur sonore caractéristique.</p>
+    <p><strong>Instruments.</strong> Bendir, <strong>zamar</strong> (clarinette double à deux cornes), percussions. Le zamar, instrument à anche double terminé par des cornes de vache, donne à l'aarfa sa couleur sonore caractéristique.</p>
     <p><strong>Caractéristiques.</strong> Chants collectifs en darija, rythmes bédouins, danse en ligne ou en cercle. La tradition reste vivante dans l'Oriental marocain, notamment autour d'Oujda et de Berkane.</p>
     <div class="video-wrapper">
         <iframe src="https://www.youtube.com/embed/ezn11aUccsw"
@@ -1086,7 +1182,6 @@
 <!-- ============================================================ -->
 <h2 id="spirituelles">6. Les musiques spirituelles et confrériques</h2>
 
-
 <h3 id="gnawa">6.1 Gnawa (كناوة)</h3>
 <div class="context">
     <p><strong>Origine.</strong> Communautés afro-descendantes, héritage d’Afrique de l’Ouest. La tradition gnawa s'est constituée au Maroc à partir du XVIIe siècle, à la croisée des apports subsahariens et du soufisme marocain. Elle est inscrite au patrimoine culturel immatériel de l'UNESCO depuis 2019.</p>
@@ -1104,7 +1199,6 @@
     </div>
     <p class="credit">Vidéo : extrait de musique gnawa. Si la vidéo ne s'affiche pas, <a href="https://www.youtube.com/watch?v=Kz7KjOkglk8" target="_blank" rel="noopener">la consulter directement sur YouTube</a>.</p>
 </div>
-
 
 <h3 id="issawa">6.2 Issawa (عيساوة)</h3>
 <div class="context">
@@ -1261,14 +1355,17 @@
     <p class="credit">Vidéo : extrait de guedra. Si la vidéo ne s'affiche pas, <a href="https://www.youtube.com/watch?v=CoFrm_kaRIw" target="_blank" rel="noopener">la consulter directement sur YouTube</a>.</p>
 </div>
 
-<h3>8.3 Haul</h3>
+<h3 id="haul">8.3 Haul</h3>
 <div class="context">
-<p>Répertoire musical saharien organisé autour de modes et de rythmes, avec le tidinit comme instrument de base et le tbal comme pilier rythmique féminin.</p>
+    <p><strong>Définition.</strong> Le <em>haul</em> (ou <em>ḥawl</em>) désigne le système modal de la musique hassanie, organisé autour de cinq échelles principales (Kar, Fagu, Sennima, Raju, etc.). Chaque échelle possède sa couleur, son répertoire de poèmes et ses rythmes associés.</p>
+    <p><strong>Instruments.</strong> Le <strong>tidinit</strong> (luth masculin) est l'instrument de base, tandis que le <strong>tbal</strong> (tambour en coupe) assure le pilier rythmique, souvent joué par les femmes. L'<strong>ardin</strong> (harpe) et les voix complètent l'ensemble.</p>
+    <p><strong>Caractéristiques.</strong> Le haul structure la poésie chantée saharienne : chaque poème est associé à un mode, et l'interprétation repose sur la relation entre le tidinit, le tbal et les voix. C'est un répertoire transmis dans un cadre familial et communautaire.</p>
 </div>
 
 <!-- ============================================================ -->
 <h2 id="correspondance">9. Tableau de correspondance : traditions et instruments</h2>
 
+<div class="table-wrapper">
 <table class="correspondance-table">
     <thead>
         <tr><th>Tradition / genre</th><th>Instruments caractéristiques</th></tr>
@@ -1285,7 +1382,7 @@
         <tr><td><strong>Aïta Chaïdmiya</strong></td><td>Megroune, sinja, bendir, taarija</td></tr>
         <tr><td><strong>Abidat Rma</strong></td><td>Bendir, taarija, ciseaux (mqass)</td></tr>
         <tr><td><strong>Reggada</strong></td><td>Zamar, bendir (adjoun), tamja (gasba)</td></tr>
-        <tr><td><strong>Aarfa / Arfa</strong></td><td>Bendir, zamer, percussions</td></tr>
+        <tr><td><strong>Aarfa / Arfa</strong></td><td>Bendir, zamar, percussions</td></tr>
         <tr><td><strong>Taqtoqa Jabalia</strong></td><td>Violon, luth, bendir, taarija, tar</td></tr>
         <tr><td><strong>Al-âla</strong></td><td>Oud, kouitra, oud ramal, rebab, kamanja, qanoun, nay, tar, riq, darbouka, naqarat</td></tr>
         <tr><td><strong>Gharnati</strong></td><td>Instruments similaires à l’al-âla</td></tr>
@@ -1296,6 +1393,7 @@
         <tr><td><strong>Rock amazigh</strong></td><td>Ribab, guitare électrique, basse, batterie</td></tr>
     </tbody>
 </table>
+</div>
 
 <!-- ============================================================ -->
 <h2 id="regions">10. Les régions musicales du Maroc (carte)</h2>
@@ -1412,6 +1510,7 @@
 <!-- ============================================================ -->
 <h2 id="lexique">13. Lexique trilingue (français / darija / arabe)</h2>
 
+<div class="table-wrapper">
 <table class="lexique-table">
     <thead>
         <tr><th>Français</th><th>Darija</th><th>Arabe</th></tr>
@@ -1448,6 +1547,7 @@
         <tr><td>Transe</td><td>Jadba</td><td>الجذبة</td></tr>
     </tbody>
 </table>
+</div>
 
 <!-- ============================================================ -->
 <h2 id="ressources">14. Ressources documentaires</h2>
@@ -1456,6 +1556,7 @@
 
 <h3>Catalogues, bibliothèques et archives</h3>
 
+<div class="table-wrapper">
 <table class="ressources-table">
     <thead>
         <tr><th>Ressource</th><th>Contenu et intérêt</th></tr>
@@ -1463,29 +1564,31 @@
     <tbody>
         <tr>
             <td>BnF — Catalogue général</td>
-            <td>Notice du <em>Tableau de la musique marocaine</em> d’Alexis Chottin (1939), avec la liste des instruments reproduits : <em>aguâl, bendir, derbouka, gasba, guenbri citadin, grand guenbri, lîra, luth, qaraqeb, rebab, rhaïta nfîr, tambourin, ta’nja, tar, tbel, tbîlat, violons, zamr</em>. Une source fondamentale pour l’organologie historique.[reference:0]</td>
+            <td>Notice du <em>Tableau de la musique marocaine</em> d’Alexis Chottin (1939), avec la liste des instruments reproduits : <em>aguâl, bendir, derbouka, gasba, guenbri citadin, grand guenbri, lîra, luth, qaraqeb, rebab, rhaïta nfîr, tambourin, ta’nja, tar, tbel, tbîlat, violons, zamr</em>. Une source fondamentale pour l’organologie historique.</td>
         </tr>
         <tr>
             <td>Bpi — Catalogue</td>
-            <td><em>Instruments des musiques populaires et de confréries au Maroc : fragments de musées</em> (1998). Répertoire d’instruments sélectionnés dans les collections des principaux musées marocains, avec une réflexion sur les genres musicaux associés.[reference:1]</td>
+            <td><em>Instruments des musiques populaires et de confréries au Maroc : fragments de musées</em> (1998). Répertoire d’instruments sélectionnés dans les collections des principaux musées marocains, avec une réflexion sur les genres musicaux associés.</td>
         </tr>
         <tr>
             <td>CREM-CNRS — Archives sonores</td>
-            <td><em>Instruments de musique du Maroc et d’al-Andalus</em> (1999), catalogue d’exposition (Abbaye de Royaumont) par Catherine Homo-Lechner et Christian Rault, avec un disque compact de « palette sonore » correspondant aux instruments exposés.[reference:2]</td>
+            <td><em>Instruments de musique du Maroc et d’al-Andalus</em> (1999), catalogue d’exposition (Abbaye de Royaumont) par Catherine Homo-Lechner et Christian Rault, avec un disque compact de « palette sonore » correspondant aux instruments exposés.</td>
         </tr>
         <tr>
             <td>BnF — <em>Corpus de musique marocaine</em></td>
-            <td>Publication dirigée par Prosper Ricard (1931), fascicule I : <em>Nouba de Ochchâk</em>. Témoignage de la transcription savante du répertoire andalou au début du XXe siècle.[reference:3]</td>
+            <td>Publication dirigée par Prosper Ricard (1931), fascicule I : <em>Nouba de Ochchâk</em>. Témoignage de la transcription savante du répertoire andalou au début du XXe siècle.</td>
         </tr>
         <tr>
             <td>Abhatoo — Centre national de documentation (Maroc)</td>
-            <td>Références d’ouvrages en arabe sur la musique andalouse et l’histoire de la musique marocaine, dont <em>الموسيقى الأندلسية المغربية</em> (Ben Abdeljalil, 1988) et <em>مدخل إلى تاريخ الموسيقى المغربية</em> (1983), avec des chapitres consacrés aux instruments.[reference:4]</td>
+            <td>Références d’ouvrages en arabe sur la musique andalouse et l’histoire de la musique marocaine, dont <em>الموسيقى الأندلسية المغربية</em> (Ben Abdeljalil, 1988) et <em>مدخل إلى تاريخ الموسيقى المغربية</em> (1983), avec des chapitres consacrés aux instruments.</td>
         </tr>
     </tbody>
 </table>
+</div>
 
 <h3>Enregistrements et anthologies sonores</h3>
 
+<div class="table-wrapper">
 <table class="ressources-table">
     <thead>
         <tr><th>Ressource</th><th>Contenu et intérêt</th></tr>
@@ -1493,25 +1596,27 @@
     <tbody>
         <tr>
             <td>Smithsonian Folkways — <em>Music of Morocco</em></td>
-            <td>Enregistrements réalisés par Christopher Wanklyn en 1961–1962, publiés en 1966. Panorama des musiques « de tous les jours », sacrées et profanes : Aïssawa, Gnawa, <em>Toqtoqa Jabalia</em>, <em>Ahouach</em> du Moussem de Moulay Brahim, musiciens de café de Tétouan. Instruments documentés : <em>tarija</em>, <em>awad</em>, <em>rhaita</em>, <em>kamenja</em>, <em>guinbri</em>, <em>bendir</em>, <em>gannega</em>, <em>qsbah</em>, <em>djouf</em>, <em>taarij</em>.[reference:5][reference:6]</td>
+            <td>Enregistrements réalisés par Christopher Wanklyn en 1961–1962, publiés en 1966. Panorama des musiques « de tous les jours », sacrées et profanes : Aïssawa, Gnawa, <em>Toqtoqa Jabalia</em>, <em>Ahouach</em> du Moussem de Moulay Brahim, musiciens de café de Tétouan. Instruments documentés : <em>tarija</em>, <em>awad</em>, <em>rhaita</em>, <em>kamenja</em>, <em>guinbri</em>, <em>bendir</em>, <em>gannega</em>, <em>qsbah</em>, <em>djouf</em>, <em>taarij</em>.</td>
         </tr>
         <tr>
             <td><em>Maroc : anthologie des rwaïyes</em> (1990)</td>
-            <td>Coffret préparé par le ministère de la Culture marocain et la Maison des Cultures du Monde, avec des notes historiques et techniques de Mohamed Banaïssa et Ahmed Aydoun. Ensemble instrumental : <em>rebâb</em> (vièle à pique), <em>lûtâr</em> (luth), percussions.[reference:7]</td>
+            <td>Coffret préparé par le ministère de la Culture marocain et la Maison des Cultures du Monde, avec des notes historiques et techniques de Mohamed Banaïssa et Ahmed Aydoun. Ensemble instrumental : <em>rebâb</em> (vièle à pique), <em>lûtâr</em> (luth), percussions.</td>
         </tr>
         <tr>
             <td><em>Hassānīya Music From The Western Sahara And Mauritania</em></td>
-            <td>Enregistrements récents documentant le <em>tidinit</em>, l’<em>ardin</em>, le <em>tbal</em> et les formations modernes (synthétiseur, guitare). Utile pour entendre la coexistence des instruments traditionnels et électriques.[reference:8]</td>
+            <td>Enregistrements récents documentant le <em>tidinit</em>, l’<em>ardin</em>, le <em>tbal</em> et les formations modernes (synthétiseur, guitare). Utile pour entendre la coexistence des instruments traditionnels et électriques.</td>
         </tr>
         <tr>
             <td><em>Chikhates et Chioukhs de l’Aïta</em> (2018)</td>
-            <td>Anthologie consacrée à l’Aïta, avec ses variantes Hasbaouia, Jeblia, Chaïdmia et Haouzia. Trois années d’enregistrement et de tournage ; instruments : <em>meghroune</em>, luth, loutar, violon, bendir, tambourin.[reference:9]</td>
+            <td>Anthologie consacrée à l’Aïta, avec ses variantes Hasbaouia, Jeblia, Chaïdmia et Haouzia. Trois années d’enregistrement et de tournage ; instruments : <em>meghroune</em>, luth, loutar, violon, bendir, tambourin.</td>
         </tr>
     </tbody>
 </table>
+</div>
 
 <h3>Encyclopédies et articles académiques</h3>
 
+<div class="table-wrapper">
 <table class="ressources-table">
     <thead>
         <tr><th>Ressource</th><th>Contenu et intérêt</th></tr>
@@ -1519,37 +1624,39 @@
     <tbody>
         <tr>
             <td>Larousse — « Maroc : musique »</td>
-            <td>Synthèse classique sur la musique marocaine : personnalité musicale, vingt-six modes, onze <em>nawba-s</em>, instruments de l’orchestre andalou (« luths (oûd-s et kwitra-s), vièles et violons (rabâba-s et kamânja), cithares (qânûn-s), flûtes obliques (nây-s) et percussions (târ-s et darabuka-s) »). Mentionne aussi la <em>ghaïta</em> et le <em>bandîr</em> dans les musiques populaires.[reference:10]</td>
+            <td>Synthèse classique sur la musique marocaine : personnalité musicale, vingt-six modes, onze <em>nawba-s</em>, instruments de l’orchestre andalou (« luths (oûd-s et kwitra-s), vièles et violons (rabâba-s et kamânja), cithares (qânûn-s), flûtes obliques (nây-s) et percussions (târ-s et darabuka-s) »). Mentionne aussi la <em>ghaïta</em> et le <em>bandîr</em> dans les musiques populaires.</td>
         </tr>
         <tr>
             <td><em>The SAGE International Encyclopedia of Music and Culture</em></td>
-            <td>Entrées sur les confréries religieuses (Aïssawa, Hamadsha, Heddawa, Jilala, Gnawa). Précise les instruments : <em>tbal</em> et <em>ghaita</em> pour les Aïssawa ; <em>harrazī</em> (grand tambour en terre cuite) pour les Hamadsha ; <em>bendīr</em> et <em>qasaba</em> pour les Jilala. Analyse aussi l’influence du <em>halqa</em> et des technologies sur les pratiques contemporaines.[reference:11][reference:12]</td>
+            <td>Entrées sur les confréries religieuses (Aïssawa, Hamadsha, Heddawa, Jilala, Gnawa). Précise les instruments : <em>tbal</em> et <em>ghaita</em> pour les Aïssawa ; <em>harrazī</em> (grand tambour en terre cuite) pour les Hamadsha ; <em>bendīr</em> et <em>qasaba</em> pour les Jilala. Analyse aussi l’influence du <em>halqa</em> et des technologies sur les pratiques contemporaines.</td>
         </tr>
         <tr>
             <td>Nathalie Fernando — <em>Les Gnawa du Maroc : intercesseurs de la différence ?</em></td>
-            <td>Thèse de doctorat (Université de Montréal) : étude ethnomusicologique, ethnopoétique et ethnochoréologique des Gnawa, de leurs instruments rituels, de leurs performances et de leurs transes. Présente dans toutes les grandes villes du Maroc.[reference:13]</td>
+            <td>Thèse de doctorat (Université de Montréal) : étude ethnomusicologique, ethnopoétique et ethnochoréologique des Gnawa, de leurs instruments rituels, de leurs performances et de leurs transes. Présente dans toutes les grandes villes du Maroc.</td>
         </tr>
         <tr>
             <td>Cynthia J. Becker — <em>Blackness in Morocco: Gnawa Identity Through Music and Visual Culture</em></td>
-            <td>Ouvrage universitaire sur la conscience historique des Gnawa, leurs cérémonies, leurs instruments et la scène d’Essaouira. S’appuie sur des archives et une recherche de terrain prolongée.[reference:14]</td>
+            <td>Ouvrage universitaire sur la conscience historique des Gnawa, leurs cérémonies, leurs instruments et la scène d’Essaouira. S’appuie sur des archives et une recherche de terrain prolongée.</td>
         </tr>
         <tr>
             <td>Sum — « The sersera of the guembri »</td>
-            <td>Article anthropologique sur le dispositif <em>sersera</em> (anneaux métalliques fixés sur la caisse du guembri), dans le contexte des diasporas gnawa à Bruxelles et au Maroc. Analyse le rôle de cet idiophone intégré dans le luth rituel.[reference:15]</td>
+            <td>Article anthropologique sur le dispositif <em>sersera</em> (anneaux métalliques fixés sur la caisse du guembri), dans le contexte des diasporas gnawa à Bruxelles et au Maroc. Analyse le rôle de cet idiophone intégré dans le luth rituel.</td>
         </tr>
         <tr>
             <td>Bousselam (2022)</td>
-            <td>Travail cité sur la disparition puis la reconstitution de l’<em>oud ramal</em> au Maroc, avec des références aux luthiers et aux associations impliquées. Signalé dans les archives documentaires sur la musique marocaine.[reference:16]</td>
+            <td>Travail cité sur la disparition puis la reconstitution de l’<em>oud ramal</em> au Maroc, avec des références aux luthiers et aux associations impliquées. Signalé dans les archives documentaires sur la musique marocaine.</td>
         </tr>
         <tr>
             <td>Chottin, Alexis — <em>Tableau de la musique marocaine</em> (1939)</td>
-            <td>Ouvrage fondateur de l’ethnomusicologie marocaine, avec des planches d’instruments (<em>aguâl, bendir, derbouka, gasba, guenbri, lîra, luth, qaraqeb, rebab, rhaïta nfîr, ta’nja, tar, tbel, tbîlat, violons, zamr</em>), des notations musicales et une bibliographie. Toujours cité dans les études sur les Gnawa et la musique andalouse.[reference:17][reference:18]</td>
+            <td>Ouvrage fondateur de l’ethnomusicologie marocaine, avec des planches d’instruments (<em>aguâl, bendir, derbouka, gasba, guenbri, lîra, luth, qaraqeb, rebab, rhaïta nfîr, ta’nja, tar, tbel, tbîlat, violons, zamr</em>), des notations musicales et une bibliographie. Toujours cité dans les études sur les Gnawa et la musique andalouse.</td>
         </tr>
     </tbody>
 </table>
+</div>
 
 <h3>Ressources en ligne et portails</h3>
 
+<div class="table-wrapper">
 <table class="ressources-table">
     <thead>
         <tr><th>Ressource</th><th>Contenu et intérêt</th></tr>
@@ -1557,23 +1664,23 @@
     <tbody>
         <tr>
             <td>UNESCO — Patrimoine culturel immatériel</td>
-            <td>Fiche sur la <strong>pratique gnawa</strong> (inscrite en 2019) et documents sur l’<strong>espace culturel de la place Jemaa el-Fna</strong>, où se produisent musiciens amazighs, danseurs gnawis et joueurs de <em>senthir</em> (<em>hajhouj</em>).[reference:19]</td>
+            <td>Fiche sur la <strong>pratique gnawa</strong> (inscrite en 2019) et documents sur l’<strong>espace culturel de la place Jemaa el-Fna</strong>, où se produisent musiciens amazighs, danseurs gnawis et joueurs de <em>senthir</em> (<em>hajhouj</em>).</td>
         </tr>
         <tr>
             <td>IRCAM — Centre de recherche et de documentation</td>
-            <td>Ressources sur la musique amazighe, notamment des analyses du jeu d’archet du <em>ribab</em> soussi et de la technique du « détaché ».[reference:20]</td>
+            <td>Ressources sur la musique amazighe, notamment des analyses du jeu d’archet du <em>ribab</em> soussi et de la technique du « détaché ».</td>
         </tr>
         <tr>
             <td>Music In Africa</td>
-            <td>Article sur les musiques traditionnelles au Maroc, utile pour les variantes régionales de l’Aïta et les instruments associés (kamanja, loutar, tambourin).[reference:21]</td>
+            <td>Article sur les musiques traditionnelles au Maroc, utile pour les variantes régionales de l’Aïta et les instruments associés (kamanja, loutar, tambourin).</td>
         </tr>
         <tr>
             <td>Darbatook</td>
-            <td>Fiches techniques sur les percussions des confréries, notamment le <em>bouznazel</em>, la <em>tbila</em> et la <em>tassa</em> dans la tradition Aïssawa.[reference:22]</td>
+            <td>Fiches techniques sur les percussions des confréries, notamment le <em>bouznazel</em>, la <em>tbila</em> et la <em>tassa</em> dans la tradition Aïssawa.</td>
         </tr>
         <tr>
             <td>Folk Culture BH (Bahreïn) — articles sur la musique hassanie</td>
-            <td>Présentation des instruments à cordes sahariens : <em>tidnit</em>, <em>ardîn</em>, <em>cumbra</em> et <em>rebaba</em>. Le <em>tidnit</em> y est décrit comme l’instrument « primordial » du Sahara occidental.[reference:23]</td>
+            <td>Présentation des instruments à cordes sahariens : <em>tidnit</em>, <em>ardîn</em>, <em>cumbra</em> et <em>rebaba</em>. Le <em>tidnit</em> y est décrit comme l’instrument « primordial » du Sahara occidental.</td>
         </tr>
         <tr>
             <td>Wikipédia — « Instruments de musique du Maroc »</td>
@@ -1581,10 +1688,28 @@
         </tr>
     </tbody>
 </table>
+</div>
 
 <div class="page-footer">
-    <p>Encyclopédie des instruments et traditions musicales du Maroc |  Novembre 2026</p>
+    <p>Encyclopédie des instruments et traditions musicales du Maroc | Novembre 2026</p>
 </div>
+
+<a href="#" class="back-to-top" aria-label="Retour en haut de la page" title="Retour en haut">↑</a>
+
+<script>
+    // Barre de progression de lecture
+    (function () {
+        const bar = document.getElementById('progressBar');
+        if (!bar) return;
+        window.addEventListener('scroll', function () {
+            const h = document.documentElement;
+            const scrolled = h.scrollTop;
+            const height = h.scrollHeight - h.clientHeight;
+            const p = height > 0 ? (scrolled / height) * 100 : 0;
+            bar.style.width = p + '%';
+        }, { passive: true });
+    })();
+</script>
 
 </body>
 </html>
