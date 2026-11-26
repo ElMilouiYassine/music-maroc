@@ -377,6 +377,25 @@
             background: var(--noir);
             color: #fff;
         }
+        /* ---------- VIDÉO RESPONSIVE ---------- */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            padding-bottom: 56.25%; /* ratio 16:9 */
+            margin: 1.5rem 0;
+            background: #000;
+            border: 1px solid var(--bordure);
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
     </style>
 </head>
 <body>
@@ -850,9 +869,8 @@
 <!-- NAY / GASBA -->
 <div class="instrument-card">
     <h4 class="instrument-name">Le nay, la gasba et l’awad <span class="arabic">الناي / القصبة / العواد</span><span class="badge-famille">Aérophone</span></h4>
-    <img src="src/Gasba.jpg" >
-    <div
-    div class="fiche-technique">
+            <img src="src/Gasba.jpg" alt="Gasba, flûte en roseau marocaine">
+    <div class="fiche-technique">
         <div class="critere"><strong>Nay</strong>Flûte en roseau des traditions savantes et soufies, ouverte aux deux extrémités.</div>
         <div class="critere"><strong>Gasba</strong>Flûte en roseau utilisée dans la Reggada, les Jilala et les traditions populaires. La BnF mentionne la <em>gasba</em> dans les instruments reproduits par Chottin.</div>
         <div class="critere"><strong>Awad</strong>Flûte traditionnelle en roseau attestée dans les traditions marocaines. Les enregistrements Smithsonian Folkways de 1966 documentent l’<em>awad</em> dans les contextes ruraux.</div>
@@ -896,18 +914,34 @@
 <!-- ============================================================ -->
 <h2 id="traditions-amazighes">4. Les traditions musicales amazighes</h2>
 
-<h3>4.1 Ahwach (أحواش)</h3>
+<h3 id="ahwach">4.1 Ahwach (أحواش)</h3>
 <div class="context">
-<p><strong>Origine et région.</strong> Souss, Haut Atlas et Anti-Atlas. Danse chantée collective en cercle ou en rangées.</p>
-<p><strong>Instruments.</strong> Bendir (tallount), agwal, tambours sur cadre, flûtes, battements de mains. Les enregistrements de 1966 documentent l’<em>Ahouach</em> lors du Moussem de Moulay Brahim.</p>
-<p><strong>Rythmes et chants.</strong> Cycles répétitifs, chants en tachelhit (poétiques, satiriques ou rituels).</p>
+    <p><strong>Origine et région.</strong> Souss, Haut Atlas et Anti-Atlas. Danse chantée collective en cercle ou en rangées, pratiquée lors des fêtes agricoles, des mariages et des moussems. Le terme <em>ahwach</em> (ou <em>ahouach</em>) désigne à la fois la danse, le chant et l'événement social qui les réunit.</p>
+    <p><strong>Instruments.</strong> Bendir (tallount), agwal, tambours sur cadre, flûtes, battements de mains. Les enregistrements de 1966 documentent l’<em>Ahouach</em> lors du Moussem de Moulay Brahim. Le bendir y joue un rôle structurant : il marque le cycle rythmique sur lequel se greffent les voix.</p>
+    <p><strong>Rythmes et chants.</strong> Cycles répétitifs, chants en tachelhit (poétiques, satiriques ou rituels). Les phrases musicales alternent souvent entre un chœur et un soliste, dans un jeu de question-réponse qui peut durer plusieurs heures.</p>
+    <p><strong>Transmission.</strong> Longtemps transmis oralement au sein des villages et des familles, l'ahwach est aujourd'hui porté par des associations, des troupes de festivals et des conservatoires, tout en restant une pratique vivante des communautés rurales.</p>
+    <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/6n3pFFPSlW4" 
+                title="Ahwach — danse et chant collectifs du Souss" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen 
+                loading="lazy"></iframe>
+    </div>
+    <p class="credit">Vidéo : extrait documentaire sur l'ahwach. Si la vidéo ne s'affiche pas, <a href="https://www.youtube.com/watch?v=6n3pFFPSlW4" target="_blank" rel="noopener">la consulter directement sur YouTube</a>.</p>
 </div>
+
 
 <h3>4.2 Ahidous (أحيدوس)</h3>
 <div class="context">
 <p><strong>Origine et région.</strong> Moyen Atlas. Danse-chant collectif en ligne ou en cercle.</p>
 <p><strong>Instruments.</strong> Bendir (tallount), tambours, percussions, battements de mains.</p>
 <p><strong>Rythmes et chants.</strong> Chants en tamazight, poésie orale. L’encyclopédie SAGE souligne que l’<em>ahidous</em> et l’<em>ahwash</em> réunissent hommes et femmes en cercle, accompagnés de tambours sur cadre.</p>
+    <div class="video-wrapper">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/mO75z4LWGcI?si=PuMF_YCUQKZPDjgR" 
+        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
 </div>
 
 <h3>4.3 Rwaïss (الروايس)</h3>
